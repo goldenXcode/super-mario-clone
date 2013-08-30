@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "mario-game";
+		cfg.title = "Super Mario Bros. clone - " + MarioGame.VERSION;
 		cfg.useGL20 = true;
 		cfg.width = 512;
 		cfg.height = 448;
