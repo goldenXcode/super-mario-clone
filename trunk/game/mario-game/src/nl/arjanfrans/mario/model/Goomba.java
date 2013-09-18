@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 public class Goomba extends Creature {
 	protected float max_velocity = 1f;
 	protected GoombaAnimation gfx = new GoombaAnimation();
+	protected Rectangle rect = new Rectangle();
 
 	public Goomba(World world, float positionX, float positionY) {
 		super(world, positionX, positionY, 3f);
@@ -86,7 +87,8 @@ public class Goomba extends Creature {
 		super.act(delta);
 		if(state != State.Dying) {
 			move(direction);
-			applyPhysics();
+			rect.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+			applyPhysics(rect);
 			collisionWithCreature();
 		}
 	}

@@ -68,7 +68,7 @@ public abstract class MovingActor extends Actor {
 	}
 	
 
-	protected void applyPhysics() {
+	protected void applyPhysics(Rectangle rect) {
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		if (deltaTime == 0) return;
 		stateTime += deltaTime;
@@ -84,9 +84,6 @@ public abstract class MovingActor extends Actor {
 
 		velocity.scl(deltaTime); // multiply by delta time so we know how far we go in this frame
 
-		Rectangle rect = rectPool.obtain();
-		rect.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		
 		if(collisionX(rect)) collisionXAction();
 		rect.x = this.getX();
 		collisionY(rect);
@@ -129,6 +126,7 @@ public abstract class MovingActor extends Actor {
 	 * @param checkx Check x if true or if false check y
 	 * @return startX, startY, endX, enY
 	 */
+	
 	protected int[] checkTiles(boolean checkX) {
 		int startX, startY, endX, endY;
 		if(checkX) {
@@ -175,6 +173,7 @@ public abstract class MovingActor extends Actor {
 				break;
 			}
 		}
+		
 		for(StaticActor a : world.getStaticActors()) {
 			if(rect.overlaps(a.rectangle()) && !a.isDestroyed()) {
 				if (velocity.y > 0) {

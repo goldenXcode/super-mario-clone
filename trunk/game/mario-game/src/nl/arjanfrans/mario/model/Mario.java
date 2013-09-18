@@ -18,9 +18,10 @@ import com.badlogic.gdx.utils.Array;
 
 public class Mario extends Creature {
 	protected MarioAnimation gfx = new MarioAnimation();
-	private float jump_boost = 40f;
+	private float jump_boost = 40f, width, height;
 	private boolean immume;
 	private SpriteBatch batch = new SpriteBatch();
+	protected Rectangle rect = new Rectangle();
 	
 	
 
@@ -91,7 +92,11 @@ public class Mario extends Creature {
 			if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
 				move(Direction.RIGHT);
 			}
-			applyPhysics();
+			
+			width = gfx.getFrameWidth(level, width);
+			height = gfx.getFrameHeight(level, height);
+			rect.set(this.getX(), this.getY(), width, height);
+			applyPhysics(rect);
 			collisionWithEnemy();
 			collisionWithMushroom();
 		}
