@@ -25,9 +25,7 @@ public class MarioAnimation extends CharacterAnimation {
 
 		walking = new Animation(0.1f, regions);
 		walking.setPlayMode(Animation.LOOP_PINGPONG);
-				
-		
-		
+					
 		AtlasRegion region = atlas.findRegion("mario_mini_jump");
 		jumping = new Animation(0, region);
 		
@@ -46,6 +44,7 @@ public class MarioAnimation extends CharacterAnimation {
 		
 		region = atlas.findRegion("mario_big_crouch");
 		crouch_big = new Animation(0, region);
+		
 	}
 
 
@@ -81,33 +80,33 @@ public class MarioAnimation extends CharacterAnimation {
 	
 	public Vector2 getDimensions(State state, int level) {
 		switch(state) {
-//			case Walking:
-//				if(level == 1) {
-//					return new Vector2(walking.getKeyFrame(0).getRegionWidth() * scale, 
-//							walking.getKeyFrame(0).getRegionHeight() * scale);
-//				}
-//				else if(level == 2) {
-//					return new Vector2(walking_big.getKeyFrame(0).getRegionWidth() * scale, 
-//							walking_big.getKeyFrame(0).getRegionHeight() * scale);
-//				}
-//			case Standing:
-//				if(level == 1) {
-//					return new Vector2(standing.getKeyFrame(0).getRegionWidth() * scale, 
-//							standing.getKeyFrame(0).getRegionHeight() * scale);
-//				}
-//				else if(level == 2) {
-//					return new Vector2(standing_big.getKeyFrame(0).getRegionWidth() * scale, 
-//							standing_big.getKeyFrame(0).getRegionHeight() * scale);
-//				}
-//			case Jumping:
-//				if(level == 1) {
-//					return new Vector2(jumping.getKeyFrame(0).getRegionWidth() * scale, 
-//							jumping.getKeyFrame(0).getRegionHeight() * scale);
-//				}
-//				else if(level == 2) {
-//					return new Vector2(jumping_big.getKeyFrame(0).getRegionWidth() * scale, 
-//							jumping_big.getKeyFrame(0).getRegionHeight() * scale);
-//				}
+			/*case Walking:
+				if(level == 1) {
+					return new Vector2(walking.getKeyFrame(0).getRegionWidth() * scale, 
+							walking.getKeyFrame(0).getRegionHeight() * scale);
+				}
+				else if(level == 2) {
+					return new Vector2(walking_big.getKeyFrame(0).getRegionWidth() * scale, 
+							walking_big.getKeyFrame(0).getRegionHeight() * scale);
+				}
+			case Standing:
+				if(level == 1) {
+					return new Vector2(standing.getKeyFrame(0).getRegionWidth() * scale, 
+							standing.getKeyFrame(0).getRegionHeight() * scale);
+				}
+				else if(level == 2) {
+					return new Vector2(standing_big.getKeyFrame(0).getRegionWidth() * scale, 
+							standing_big.getKeyFrame(0).getRegionHeight() * scale);
+				}*/
+			case Jumping:
+				if(level == 1) {
+					return new Vector2(jumping.getKeyFrame(0).getRegionWidth() * scale, 
+							jumping.getKeyFrame(0).getRegionHeight() * scale);
+				}
+				else if(level == 2) {
+				return new Vector2(jumping_big.getKeyFrame(0).getRegionWidth() * scale, 
+						jumping_big.getKeyFrame(0).getRegionHeight() * scale);
+				}
 			case Dying:
 				return new Vector2(dying.getKeyFrame(0).getRegionWidth() * scale, 
 						dying.getKeyFrame(0).getRegionHeight() * scale);
@@ -124,5 +123,18 @@ public class MarioAnimation extends CharacterAnimation {
 		return new Vector2(dying.getKeyFrame(0).getRegionWidth() * scale, 
 				dying.getKeyFrame(0).getRegionHeight() * scale);
 	}
-
+	
+	public float getFrameWidth(int level, float width){
+		if (level == 1) width = walking.getKeyFrame(0).getRegionWidth() * scale;
+		else width = walking_big.getKeyFrame(0).getRegionWidth() * scale;
+		
+		return width;
+	}
+	
+	public float getFrameHeight(int level, float height){
+		if (level == 1) height = walking.getKeyFrame(0).getRegionHeight() * scale;
+		else height = walking_big.getKeyFrame(0).getRegionHeight() * scale;
+		
+		return height;
+	}
 }

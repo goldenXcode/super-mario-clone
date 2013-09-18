@@ -5,9 +5,11 @@ import nl.arjanfrans.mario.model.MovingActor.Direction;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Super extends Mushroom {
 	private static TextureRegion texture;
+	protected Rectangle rect = new Rectangle();
 	
 	public Super (World world, float x, float y, float max_velocity) {
 		super(world, x, y, max_velocity);
@@ -27,7 +29,8 @@ public class Super extends Mushroom {
 	public void act(float delta) {
 		super.act(delta);
 		move(direction);
-		if(moving) applyPhysics();
+		rect.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		if(moving) applyPhysics(rect);
 	}
 
 	@Override
