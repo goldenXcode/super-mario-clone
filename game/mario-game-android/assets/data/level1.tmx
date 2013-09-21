@@ -13,6 +13,7 @@
     <property name="Name" value="Animated"/>
     <property name="actor" value="Bonus"/>
     <property name="animation" value="bonus_block"/>
+    <property name="color" value="brown"/>
     <property name="destructable" value="false"/>
     <property name="speed" value="0.15f"/>
    </properties>
