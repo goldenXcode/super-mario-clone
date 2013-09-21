@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
+@Deprecated
 public class Bonus extends StaticActor {
 	private Animation animation;
 	private float stateTime;

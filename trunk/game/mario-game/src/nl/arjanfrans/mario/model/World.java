@@ -120,16 +120,15 @@ public class World {
 					if(oldTile.getProperties().containsKey("actor")) {
 						String type = (String) oldTile.getProperties().get("actor");
 						StaticActor actor = null;
-						//TODO merge brick and bonus classes
+						//TODO cleanup, double code!
 						if(type.equals("Brick")) {
 							String color = (String) oldTile.getProperties().get("color");
-							actor = new Brick(this, x, y, color);
+							actor = new Brick(this, x, y, color, false, true);
 							itemsInBrick((Brick) actor, x, y);
 						}
 						else if(type.equals("Bonus")) {
-							String animation = (String) oldTile.getProperties().get("animation");
-							float speed = Float.parseFloat((String) oldTile.getProperties().get("speed"));
-							actor = new Bonus(this, x, y, speed, animation);
+							String color = (String) oldTile.getProperties().get("color");
+							actor = new Brick(this, x, y, color, true, false);
 						} 
 						layer.setCell(x, y, null);
 						stage.addActor(actor);
