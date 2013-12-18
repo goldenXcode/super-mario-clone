@@ -20,6 +20,7 @@ import com.badlogic.gdx.Gdx;
 public class MarioGame extends Game {
 	private WorldRenderer wr;
 	private World world;
+	public static final String VERSION = "0.01";
 	
 	@Override
 	public void create()
