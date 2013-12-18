@@ -149,6 +149,7 @@ public class WorldRenderer {
 
 		// let the camera follow the koala, x-axis only
 		camera.position.x = player.getX();
+		
 		camera.update();
 
 		// set viewport
