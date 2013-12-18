@@ -179,7 +179,7 @@
   </object>
  </objectgroup>
  <objectgroup name="middle_background" width="212" height="20">
-  <object gid="788" x="1023" y="320">
+  <object gid="788" x="1029" y="323">
    <properties>
     <property name="src" value="three_mountains.png"/>
    </properties>
@@ -199,19 +199,19 @@
     <property name="src" value="small_mountain_3.png"/>
    </properties>
   </object>
-  <object gid="792" x="772" y="315">
+  <object gid="792" x="770" y="320">
    <properties>
     <property name="src" value="small_mountain_4.png"/>
    </properties>
   </object>
-  <object gid="793" x="1461" y="321">
+  <object gid="793" x="1460" y="328">
    <properties>
     <property name="src" value="big_mountain.png"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="front_background" width="212" height="20">
-  <object gid="789" x="707" y="317">
+  <object gid="789" x="705" y="322">
    <properties>
     <property name="src" value="small_mountain.png"/>
    </properties>
