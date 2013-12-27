@@ -1,10 +1,15 @@
 package nl.arjanfrans.mario;
 
 import nl.arjanfrans.mario.model.World;
+import nl.arjanfrans.mario.tweens.SpriteTweenAccessor;
 import nl.arjanfrans.mario.view.WorldRenderer;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Super Mario Brothers like very basic platformer, using a tile map build via
@@ -21,10 +26,11 @@ public class MarioGame extends Game {
 	private WorldRenderer wr;
 	private World world;
 	public static final String VERSION = "0.01";
-	
+
 	@Override
 	public void create()
 	{		
+
 		world = new World();
 	}
 	
@@ -59,6 +65,7 @@ public class MarioGame extends Game {
 	@Override
 	public void render() {
 		//super.render();
+
 		world.update();
 	}
 }

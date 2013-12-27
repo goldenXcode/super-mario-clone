@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Array;
 
 public class Tiles {
-	private static TextureAtlas atlas = new TextureAtlas("data/tiles/mario_tileset.pack"); 
+	private static TextureAtlas atlas = new TextureAtlas("data/tiles/mario_tileset.atlas"); 
 
 	public static Array<StaticTiledMapTile> getAnimatedTile(String name) {
 		Array<AtlasRegion> regions = atlas.findRegions(name);
@@ -31,6 +31,12 @@ public class Tiles {
 	public static TextureRegion getTile(String name) {
 		AtlasRegion ar = atlas.findRegion(name);
 		TextureRegion[] tr = ar.split(16, 16)[0];
+		return tr[0];
+	}
+	
+	public static TextureRegion getTile8(String name) {
+		AtlasRegion ar = atlas.findRegion(name);
+		TextureRegion[] tr = ar.split(8, 8)[0];
 		return tr[0];
 	}
 	

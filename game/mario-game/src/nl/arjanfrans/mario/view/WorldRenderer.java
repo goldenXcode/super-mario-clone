@@ -3,6 +3,10 @@ package nl.arjanfrans.mario.view;
 import nl.arjanfrans.mario.model.Goomba;
 import nl.arjanfrans.mario.model.Mario;
 import nl.arjanfrans.mario.model.World;
+import nl.arjanfrans.mario.tweens.SpriteTweenAccessor;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +15,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -25,7 +30,7 @@ public class WorldRenderer {
 
 	private World world;
 	private Mario player;
-	private Array<Goomba> goombas;
+
 	private Color background_color;
 	private Texture background_image;
 	private Stage stage;
@@ -42,7 +47,6 @@ public class WorldRenderer {
 		background_image = loadBackground();
 		//		
 		player = world.getPlayer();
-		goombas = world.getEnemies();
 
 		renderer = new OrthogonalTiledMapRenderer(world.getMap(), 1 / 16f);
 
@@ -69,6 +73,7 @@ public class WorldRenderer {
 		//		ParallaxLayer l3=new ParallaxLayer(layer3,1,0);
 		ParallaxLayer[] layers={l1, l2, l3};
 		parallax_bg=new ParallaxBackground(world, layers, camera, renderer.getSpriteBatch());
+
 	}
 
 	public void resize(int width, int height) {
@@ -141,15 +146,15 @@ public class WorldRenderer {
 	public void render()
 	{
 		if(!world.getMap().equals(renderer.getMap())) renderer.setMap(world.getMap());
-		Mario player = world.getPlayer();
+
 		// clear the screen
-		//Gdx.gl.glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
-		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
+		//Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);		
 
 		// let the camera follow the koala, x-axis only
 		camera.position.x = player.getX();
-		
+
 		camera.update();
 
 		// set viewport
@@ -162,6 +167,7 @@ public class WorldRenderer {
 
 		parallax_bg.moveX(player.getVelocity().x*Gdx.graphics.getDeltaTime());
 		parallax_bg.render();
+
 
 		// set the tile map rendere view based on what the
 		// camera sees and render the map
@@ -178,26 +184,6 @@ public class WorldRenderer {
 		//		renderer.getSpriteBatch().end();
 
 	}
-
-	//	private void renderEnemies() {
-	//		Array<Goomba> goombas = world.getEnemies();
-	//		Iterator<Goomba> enemiesIt = goombas.iterator();
-	//		TextureRegion frame = null;
-	//		SpriteBatch batch = renderer.getSpriteBatch();
-	//		batch.begin();
-	//		while(enemiesIt.hasNext()) {
-	//			Goomba goomba = enemiesIt.next();
-	//			frame = goomba.getAnimation().getKeyFrame(player.getStateTime());
-	//			if (goomba.isFacesRight()) {
-	//				batch.draw(frame, goomba.getX(), goomba.getY(), goomba.getWidth(), goomba.getHeight());
-	//			}
-	//			else {
-	//				batch.draw(frame, goomba.getX() + goomba.getWidth(), goomba.getY()
-	//						, - goomba.getWidth(), player.getHeight());
-	//			}
-	//		}
-	//		batch.end();
-	//	}
 
 	public void dispose() {
 		stage.dispose();
