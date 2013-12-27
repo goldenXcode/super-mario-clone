@@ -3,118 +3,118 @@ mario_tileset.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-grass_center
+bonus_block
   rotate: false
   xy: 1, 109
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
-grass_right
+bonus_block
   rotate: false
   xy: 1, 91
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
-grass_left
+  index: 2
+bonus_block
   rotate: false
   xy: 19, 109
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
-grass_right
+  index: 3
+brick
   rotate: false
   xy: 1, 73
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
-brick
+  index: -1
+brick_empty
   rotate: false
   xy: 19, 91
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-mushroom_super
+brick_shatter
   rotate: false
   xy: 37, 109
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-bonus_block
+grass_center
   rotate: false
   xy: 1, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
-brick_shatter
+grass_center
   rotate: false
   xy: 19, 73
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
-grass_left
+  index: 2
+grass_center
   rotate: false
   xy: 37, 91
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
-grass_center
+grass_left
   rotate: false
   xy: 1, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 3
-grass_right
+  index: 1
+grass_left
   rotate: false
   xy: 19, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 3
+  index: 2
 grass_left
   rotate: false
   xy: 37, 73
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
-brick_empty
+  index: 3
+grass_right
   rotate: false
   xy: 1, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
-bonus_block
+  index: 1
+grass_right
   rotate: false
   xy: 19, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 3
-bonus_block
+  index: 2
+grass_right
   rotate: false
   xy: 37, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
-grass_center
+  index: 3
+mushroom_super
   rotate: false
   xy: 1, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
+  index: -1
 brick_piece
   rotate: false
   xy: 55, 117
