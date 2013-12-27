@@ -42,6 +42,8 @@ public class World {
 	private Stage stage;
 	private WorldRenderer wr;
 	
+	public static Array<Actor> objectsToRemove = new Array();
+	
 	public World() {
 		reset();
 	}
@@ -104,6 +106,12 @@ public class World {
 				stage.getActors().removeValue(e, true);
 			}
 		}
+		
+		for(Actor a : objectsToRemove) {
+			stage.getActors().removeValue(a, true);
+			objectsToRemove.removeValue(a, true);
+		}
+		
 		rectPool.free(screen);
 		stage.act(Gdx.graphics.getDeltaTime());
 		if(player.isDead()) reset();

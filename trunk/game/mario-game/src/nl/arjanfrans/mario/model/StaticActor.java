@@ -2,6 +2,7 @@ package nl.arjanfrans.mario.model;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 
 public abstract class StaticActor extends Actor {
@@ -18,6 +19,7 @@ public abstract class StaticActor extends Actor {
 	
 	public StaticActor(World world) {
 		this.world = world;
+		this.setTouchable(Touchable.disabled);
 	}
 	
 	public Rectangle rectangle() {

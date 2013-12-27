@@ -100,6 +100,7 @@ public class MarioAnimation extends CharacterAnimation {
 				}*/
 			case Jumping:
 				if(level == 1) {
+					//TODO define sizes in constructor
 					return new Vector2(jumping.getKeyFrame(0).getRegionWidth() * scale, 
 							jumping.getKeyFrame(0).getRegionHeight() * scale);
 				}

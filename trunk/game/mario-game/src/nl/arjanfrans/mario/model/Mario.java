@@ -29,7 +29,7 @@ public class Mario extends Creature {
 		super(world, positionX, positionY, 8f);
 		immume = false;
 		moving = true;
-		level = 1;
+		level = 2;
 		updateSize();
 	}
 	
@@ -37,8 +37,6 @@ public class Mario extends Creature {
 		this.setSize(gfx.getDimensions(state, level).x, gfx.getDimensions(state, level).y);
 	}
 	
-	
-
 	private void hitByEnemy() {	
 		if(immume == false) level--;
 		if(level < 1 && !immume) {

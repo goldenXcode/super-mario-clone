@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
@@ -47,6 +48,7 @@ public abstract class MovingActor extends Actor {
 		velocity = new Vector2(0, 0);
 		dead = false;
 		moving = false;
+		this.setTouchable(Touchable.disabled);
 	}
 
 

@@ -1,7 +1,9 @@
 package nl.arjanfrans.mario.model;
 
+import nl.arjanfrans.mario.actions.ActorActions;
 import nl.arjanfrans.mario.audio.Audio;
 import nl.arjanfrans.mario.graphics.Tiles;
+import nl.arjanfrans.mario.model.brick.BrickShatter;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 public class Brick extends StaticActor {
 	private TextureRegion texture;
 	private TextureRegion empty_texture;
-	private TextureRegion shatter;
+
 	private float stateTime;
 	private static Animation bonus_animation;
 	private int hitcount = 0;
@@ -22,6 +24,8 @@ public class Brick extends StaticActor {
 	private boolean destructable;
 	private Array<Actor> items;
 	private boolean bonus; //Whether this is a bonus tile or not
+	
+	private BrickShatter shatter;
 
 	public Brick(World world, float x, float y, String color, boolean bonus, 
 			boolean destructable) {
@@ -37,7 +41,7 @@ public class Brick extends StaticActor {
 		if(color.equals("brown")) {
 			texture = Tiles.getTile("brick");
 			empty_texture = Tiles.getTile("brick_empty");
-			shatter = Tiles.getTile("brick_shatter");
+			shatter =  new BrickShatter(this.getX(), this.getY());
 		}
 		else if(color.equals("blue")) {
 			//TODO make blue tile
@@ -50,10 +54,15 @@ public class Brick extends StaticActor {
 		super.act(delta);
 	}
 	
+	private void shatter() {
+		this.addAction(Actions.sequence(Actions.delay(0.3f), Actions.alpha(0, 0.1f), ActorActions.removeActor(this)));
+	}
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		if(destroyed) {
-			batch.draw(shatter, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+			shatter.draw(batch);
+			shatter();
 		}
 		else {
 			if(items.size < 1 && hitcount > 0) {
