@@ -17,44 +17,53 @@ public class BrickPiece extends Sprite {
 	private float speed = 0.25f;
 	private float length = 0.4f;
 	private int direction;
+	private int rotation = 0;
 	
 	public BrickPiece(float x, float y, int direction) {
 		this.position = new Vector2(x, y);
 		original_position = new Vector2(x, y);
 		this.direction = direction;
 		this.setOrigin(this.getWidth()/2, this.getHeight()/2);
+		switch(direction) {
+			case 0:
+				this.rotate(90);
+			case 1:
+				this.rotate(180);
+			case 2:
+				this.rotate(270);
+			case 3:
+				this.rotate(360);
+		}
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch) {       
 		//TODO not finished at all!! Fix math for this
 		
-		if(Math.toDegrees(angle) < 180) {
+		if(Math.toDegrees(angle) < 120) {
 
 			switch(direction) {
 				case 0:
-					
 					position.x = (float) ((length*1.5) * Math.cos(angle));
 					position.y = (float) ((length*2) * Math.sin(angle));
-					this.rotate(5);
+					rotation = 7;
 					break;
 				case 1:
 					position.x = (float) ((length*1.5) * Math.cos(angle)) * -1;
 					position.y = (float) ((length*2) * Math.sin(angle));
-					this.rotate(-5);
+					rotation = -7;
 					break;
 				case 2:
 					position.x = (float) (length * Math.cos(angle));
 					position.y = (float) (length * Math.sin(angle));
-					this.rotate(5);
+					rotation = 5;
 					break;
 				case 3:
 					position.x = (float) (length * Math.cos(angle)) * -1;
 					position.y = (float) (length * Math.sin(angle));
-					this.rotate(-5);
+					rotation = -5;
 					break;								
 			}
-			
 			angle += speed;
 			position.x += original_position.x;
 			position.y += original_position.y + 1/16;
@@ -62,7 +71,7 @@ public class BrickPiece extends Sprite {
 		else {
 			position.y -= speed;
 		}
-		
+		this.rotate(rotation);
 			
 		batch.draw(texture, position.x, position.y, getOriginX(), getOriginY(),
 				SIZE, SIZE, getScaleX(), getScaleY(), getRotation());
