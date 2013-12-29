@@ -37,8 +37,7 @@ public class BrickPiece extends Sprite {
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch) {       
-		//TODO not finished at all!! Fix math for this
+	public void draw(SpriteBatch batch) {      
 		
 		if(Math.toDegrees(angle) < 120) {
 
