@@ -78,11 +78,16 @@ public class World {
 		map = new TmxMapLoader().load("data/level1.tmx");
 		animateTiles((TiledMapTileLayer) map.getLayers().get("close_background"));
 		animateTiles((TiledMapTileLayer) map.getLayers().get("walls"));
-		player = new Mario(this, 10, 10);
+		
+		//Read the object named 'mario' from the tmx map. Read the starting position.
+		MapObject mario = map.getLayers().get("objects").getObjects().get("mario");
+		player = new Mario(this, (Integer) mario.getProperties().get("x") * World.scale,  (Integer) mario.getProperties().get("y") * World.scale);
+		
 		stage = new Stage();
 		goombas = generateEnemies();
 		mushrooms = new Array<Mushroom>();
 		generateBricks((TiledMapTileLayer) map.getLayers().get("walls"));
+		generateFlag((MapLayer) map.getLayers().get("objects"));
 		stage.addActor(player);
 		String song = (String) map.getLayers().get("background").getObjects().get("background_image")
 				.getProperties().get("audio");
@@ -117,6 +122,16 @@ public class World {
 		if(player.isDead()) reset();
 		
 		wr.render();
+	}
+	
+	private void generateFlag(MapLayer layer) {
+		MapObject obj = layer.getObjects().get("flag");
+		float x = (Integer) obj.getProperties().get("x") * (1/16f);
+		float y = (Integer) obj.getProperties().get("y") * (1/16f);
+		float width = Float.valueOf((String) obj.getProperties().get("width"));
+		float height = Float.valueOf((String) obj.getProperties().get("height"));
+		Flag flag = new Flag(x, y, width, height);
+		stage.addActor(flag);
 	}
 	
 	/**

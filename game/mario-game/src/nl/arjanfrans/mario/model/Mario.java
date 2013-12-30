@@ -22,8 +22,8 @@ public class Mario extends Creature {
 	private boolean immume;
 	private SpriteBatch batch = new SpriteBatch();
 	protected Rectangle rect = new Rectangle();
-	
-	
+
+
 
 	public Mario(World world, float positionX, float positionY) {
 		super(world, positionX, positionY, 8f);
@@ -32,11 +32,11 @@ public class Mario extends Creature {
 		level = 2;
 		updateSize();
 	}
-	
+
 	protected void updateSize() {
 		this.setSize(gfx.getDimensions(state, level).x, gfx.getDimensions(state, level).y);
 	}
-	
+
 	private void hitByEnemy() {	
 		if(immume == false) level--;
 		if(level < 1 && !immume) {
@@ -56,16 +56,16 @@ public class Mario extends Creature {
 			if(!immume) Audio.powerDown.play();
 			immume = true;
 			this.addAction(Actions.sequence(Actions.parallel(Actions.alpha(0f, 2f, Interpolation.linear),
-						Actions.fadeIn(0.4f, Interpolation.linear),
-						Actions.fadeOut(0.4f, Interpolation.linear),
-						Actions.fadeIn(0.4f, Interpolation.linear),
-						Actions.fadeOut(0.4f, Interpolation.linear),
-						Actions.fadeIn(0.4f, Interpolation.linear)),
+					Actions.fadeIn(0.4f, Interpolation.linear),
+					Actions.fadeOut(0.4f, Interpolation.linear),
+					Actions.fadeIn(0.4f, Interpolation.linear),
+					Actions.fadeOut(0.4f, Interpolation.linear),
+					Actions.fadeIn(0.4f, Interpolation.linear)),
 					Actions.alpha(1f),
 					MarioActions.stopImmumeAction(this)));
 		}
 	}
-	
+
 	protected void dieByFalling() {
 		if(this.getY() < -3f) {
 			state = State.Dying;
@@ -90,7 +90,7 @@ public class Mario extends Creature {
 			if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
 				move(Direction.RIGHT);
 			}
-			
+
 			width = gfx.getFrameWidth(level, width);
 			height = gfx.getFrameHeight(level, height);
 			rect.set(this.getX(), this.getY(), width, height);
@@ -105,32 +105,32 @@ public class Mario extends Creature {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		TextureRegion frame = gfx.getAnimation(state, level).getKeyFrame(stateTime);
-		 updateSize();
-		 Color oldColor = batch.getColor();
-		 batch.setColor(this.getColor());
-		 if(state == State.Dying) {
+		updateSize();
+		Color oldColor = batch.getColor();
+		batch.setColor(this.getColor());
+		if(state == State.Dying) {
 			batch.draw(frame, getX(), getY(), 
 					getX()+this.getWidth()/2, getY() + this.getHeight()/2,
-	                this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
+					this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
 		}
 		else {
 			if(facesRight) {
 				batch.draw(frame, this.getX(), this.getY(), 
 						this.getX()+this.getWidth()/2, this.getY() + this.getHeight()/2,
-		                this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
+						this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
 			}
 			else {
 				batch.draw(frame, this.getX() + this.getWidth(), this.getY(), 
 						this.getX()+this.getWidth()/2, this.getY() + this.getHeight()/2,
-		                -this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
+						-this.getWidth(), this.getHeight(), getScaleX(), getScaleY(), getRotation());
 			}
 		}
 		batch.setColor(oldColor);
 	}
-	
 
 
-	
+
+
 	private boolean isTouched(float startX, float endX)
 	{
 		// check if any finge is touch the area between startX and endX
@@ -173,7 +173,7 @@ public class Mario extends Creature {
 		marioRect.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		for(Goomba goomba : goombas) {
 			Rectangle eRect = goomba.rectangle();
-			
+
 			if(eRect.overlaps(marioRect) && goomba.state != State.Dying) {
 				if(velocity.y < 0 && this.getY() > goomba.getY()) {
 					goomba.deadByTrample(); //enemies dies mario stamped on his head
@@ -187,7 +187,7 @@ public class Mario extends Creature {
 			}
 		}
 	}
-	
+
 	/**
 	 * Upgrade mario to level 2.
 	 * @param mushroom
@@ -197,7 +197,7 @@ public class Mario extends Creature {
 		World.objectsToRemove.add(mushroom);
 		Audio.powerUp.play();
 	}
-	
+
 	/**
 	 * Check for collision with a mushroom/powerup
 	 */
@@ -213,13 +213,13 @@ public class Mario extends Creature {
 			}
 		}
 	}
-	
+
 	@Override
 	public Animation getAnimation() {
 		return gfx.getAnimation(state, level);
 	}
 
-	
+
 	public void dispose() {
 		gfx.dispose();
 	}
@@ -228,7 +228,7 @@ public class Mario extends Creature {
 		this.immume = immume;
 	}
 
-	
+
 
 
 }
