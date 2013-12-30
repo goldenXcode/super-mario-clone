@@ -93,8 +93,6 @@ public class Goomba extends Creature {
 		}
 	}
 
-	@Override
-	protected void hitBlock(int x, int y) {}
 
 	@Override
 	protected void collisionXAction() {
@@ -114,5 +112,6 @@ public class Goomba extends Creature {
 	public void dispose() {
 		gfx.dispose();
 	}
+
 	
 }

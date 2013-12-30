@@ -62,8 +62,6 @@ public abstract class MovingActor extends Actor {
 		world.removeActor(this);
 	}
 	
-	protected abstract void hitBlock(int x, int y);
-	
 	
 	protected Rectangle rectangle() {
 		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -164,7 +162,6 @@ public abstract class MovingActor extends Actor {
 		for (Rectangle tile : tiles) {
 			if (rect.overlaps(tile)) {
 				if (velocity.y > 0) {
-					hitBlock((int) tile.x, (int) tile.y);
 					this.setY(tile.y - this.getHeight()); //so it is just below/above the tile we collided with
 				}
 				else {
