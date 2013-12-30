@@ -188,7 +188,7 @@ public class WorldRenderer {
 	public void dispose() {
 		stage.dispose();
 		renderer.dispose();
-
+		parallax_bg.dispose();
 	}
 
 }

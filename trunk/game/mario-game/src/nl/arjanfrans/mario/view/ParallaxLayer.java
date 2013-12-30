@@ -56,6 +56,9 @@ public class ParallaxLayer {
 		loadObjects();
 	}
 	
+	/**
+	 * Load the objects from the tmx file, convert them into textures and put them on the layer.
+	 */
 	private void loadObjects() {
 		Map map = world.getMap();
 		Iterator<MapObject> it = map.getLayers().get(layer_name).getObjects().iterator();
@@ -93,5 +96,11 @@ public class ParallaxLayer {
 	 */
 	protected void moveY(float pDelta) {
 		positionY += pDelta * ratioY;
+	}
+	
+	public void dispose() {
+		for(int i = 0; i < layer_textures.size; i++) {
+			layer_textures.getValueAt(i).dispose();
+		}
 	}
 }

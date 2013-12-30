@@ -55,32 +55,25 @@ public class ParallaxBackground {
 	 * render the parallax background
 	 */
 	public void render() {
-		//batch.setProjectionMatrix(camera.projection);
 		batch.begin();
 		for (ParallaxLayer layer : layers) {
 			drawLayer(layer, batch);
-//			batch.draw(layer.region, -camera.viewportWidth / 2
-//					- layer.positionX, -camera.viewportHeight / 2
-//					- layer.positionY);
 		}
 		batch.end();
 	}
 	
 	private void drawLayer(ParallaxLayer layer, SpriteBatch batch) {
-		//batch.begin();
-		Map map = world.getMap();
 		Iterator<MapObject> it = layer.getLayerObjects().iterator();
-		//% ( layer.region.getRegionHeight() + layer.padding.y);
 		while(it.hasNext()) {
 			MapObject obj = it.next();
 			float x = (Integer) obj.getProperties().get("x") * 1/16f;
 			float y = (Integer) obj.getProperties().get("y") * 1/16f;
+			
 			String file = "data/backgrounds/" + (String) obj.getProperties().get("src");
 			Texture texture = layer.getLayerTextures().get(file);
 			batch.draw(layer.getLayerTextures().get(file), x + layer.positionX,
 					y + layer.positionY, texture.getWidth() * 1/16f, texture.getHeight() * 1/16f);
 		}
-		//batch.end();
 	}
 	
 
@@ -101,6 +94,14 @@ public class ParallaxBackground {
 	public void moveY(float pDelta) {
 		for (ParallaxLayer layer : layers) {
 			layer.moveY(pDelta);
+		}
+	}
+
+
+
+	public void dispose() {
+		for(int i = 0; i < layers.length; i++) {
+			layers[i].dispose();
 		}
 	}
 }
