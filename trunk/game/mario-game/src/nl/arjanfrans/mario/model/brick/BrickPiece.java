@@ -19,6 +19,11 @@ public class BrickPiece extends Sprite {
 	private int direction;
 	private int rotation = 0;
 	
+	/**
+	 * @param x
+	 * @param y
+	 * @param direction The direction/position the brick piece
+	 */
 	public BrickPiece(float x, float y, int direction) {
 		this.position = new Vector2(x, y);
 		original_position = new Vector2(x, y);
@@ -40,7 +45,6 @@ public class BrickPiece extends Sprite {
 	public void draw(SpriteBatch batch) {      
 		
 		if(Math.toDegrees(angle) < 120) {
-
 			switch(direction) {
 				case 0:
 					position.x = (float) ((length*1.5) * Math.cos(angle));

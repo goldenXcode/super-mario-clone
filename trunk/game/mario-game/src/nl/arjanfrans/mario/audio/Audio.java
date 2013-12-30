@@ -3,7 +3,9 @@ package nl.arjanfrans.mario.audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public class Audio {
 
@@ -19,8 +21,7 @@ public class Audio {
 	
 	public static Sound powerDown = Gdx.audio.newSound(Gdx.files.internal("data/audio/sfx/PowerDown.ogg"));
 	public static Sound powerUp = Gdx.audio.newSound(Gdx.files.internal("data/audio/sfx/PowerUp.ogg"));
-	
-	public Audio() {}
+
 
 	public static void playSong(String name, boolean looping) {
 		if(name.equals("overworld")) {
@@ -40,10 +41,6 @@ public class Audio {
 		if(song != null) {
 			song.stop();
 		}
-	}
-	
-	public static void master_mute() {
-		
 	}
 
 	public static void dispose() {

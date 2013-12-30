@@ -119,6 +119,10 @@ public class World {
 		wr.render();
 	}
 	
+	/**
+	 * Turn all bricks into actors.
+	 * @param layer
+	 */
 	private void generateBricks(TiledMapTileLayer layer) {
 		for (int x = 1; x < layer.getWidth(); x++) {
 			for (int y = 1; y < layer.getHeight(); y++) {
@@ -128,16 +132,18 @@ public class World {
 					if(oldTile.getProperties().containsKey("actor")) {
 						String type = (String) oldTile.getProperties().get("actor");
 						StaticActor actor = null;
-						//TODO cleanup, double code!
-						if(type.equals("Brick")) {
+						if(type.equals("Brick") || type.equals("Bonus")) {
 							String color = (String) oldTile.getProperties().get("color");
-							actor = new Brick(this, x, y, color, false, true);
+							boolean destructable = false;
+							if(oldTile.getProperties().containsKey("destructable")) {
+								
+								String destr = (String) oldTile.getProperties().get("destructable");
+								destructable = destr.equals("true") ? true : false;
+							}
+							
+							actor = new Brick(this, x, y, color, type.equals("Bonus"), destructable);
 							itemsInBrick((Brick) actor, x, y);
 						}
-						else if(type.equals("Bonus")) {
-							String color = (String) oldTile.getProperties().get("color");
-							actor = new Brick(this, x, y, color, true, false);
-						} 
 						layer.setCell(x, y, null);
 						stage.addActor(actor);
 					}
@@ -146,6 +152,12 @@ public class World {
 		}
 	}
 	
+	/**
+	 * Check if there are items in a brick, if there are they are added to the brick.
+	 * @param brick
+	 * @param x
+	 * @param y
+	 */
 	private void itemsInBrick(Brick brick, int x, int y) {
 		MapLayer layer = map.getLayers().get("hidden_items");
 		MapObjects objects = layer.getObjects();
@@ -176,6 +188,10 @@ public class World {
 		return staticActors;
 	}
 	
+	/**
+	 * Make the tiles containing 'animation' key animated.
+	 * @param layer
+	 */
 	private void animateTiles(TiledMapTileLayer layer) {
 		for (int x = 1; x < layer.getWidth(); x++) {
 			for (int y = 1; y < layer.getHeight(); y++) {

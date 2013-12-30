@@ -10,8 +10,6 @@ public abstract class Creature extends MovingActor {
 
 	public abstract Animation getAnimation();
 
-	protected abstract void hitBlock(int x, int y);
-
 	protected abstract void dieByFalling();
 
 	@Override

@@ -145,25 +145,10 @@ public class Mario extends Creature {
 		}
 		return false;
 	}
-		
-	
-//	/**
-//	 * What to do if we hit a block. e.g. destroy the block, or bounce back...
-//	 */
-//	protected void hitBlock(int x, int y) {
-//		TiledMapTileLayer layer = (TiledMapTileLayer) world.getMap().getLayers().get("walls");
-//		Cell cell = layer.getCell(x, y);
-//		
-//		if("false".equals(cell.getTile().getProperties().get("destructable"))) {
-//			
-//		}
-//		else {
-//			if(level > 0) {
-//				layer.setCell(x, y, null);
-//			}
-//		}
-//	}
 
+	/**
+	 * Jump
+	 */
 	private void jump() {
 		if(grounded) {
 			velocity.y += jump_velocity;
@@ -179,6 +164,9 @@ public class Mario extends Creature {
 	}
 
 
+	/**
+	 * Check for collision with an enemy.
+	 */
 	protected void collisionWithEnemy() {
 		Array<Goomba> goombas = world.getEnemies();
 		Rectangle marioRect = rectangle();
@@ -200,13 +188,21 @@ public class Mario extends Creature {
 		}
 	}
 	
+	/**
+	 * Upgrade mario to level 2.
+	 * @param mushroom
+	 */
 	private void big_mario(Mushroom mushroom) {
 		level = 2;
-		world.removeActor(mushroom);
+		World.objectsToRemove.add(mushroom);
 		Audio.powerUp.play();
 	}
 	
+	/**
+	 * Check for collision with a mushroom/powerup
+	 */
 	protected void collisionWithMushroom() {
+		//TODO Make it more generic, for all powerups and not just mushrooms
 		Array<Mushroom> mushrooms = world.getMushrooms();
 		Rectangle marioRect = rectangle();
 		marioRect.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -232,11 +228,6 @@ public class Mario extends Creature {
 		this.immume = immume;
 	}
 
-	@Override
-	protected void hitBlock(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 
 

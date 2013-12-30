@@ -27,8 +27,7 @@ public class Brick extends StaticActor {
 	
 	private BrickShatter shatter;
 
-	public Brick(World world, float x, float y, String color, boolean bonus, 
-			boolean destructable) {
+	public Brick(World world, float x, float y, String color, boolean bonus, boolean destructable) {
 		super(world);
 		this.bonus = bonus;
 		this.destructable = destructable;
@@ -54,6 +53,9 @@ public class Brick extends StaticActor {
 		super.act(delta);
 	}
 	
+	/**
+	 * Shatter the brick in pieces.
+	 */
 	private void shatter() {
 		this.addAction(Actions.sequence(Actions.delay(0.3f), Actions.alpha(0, 0.1f), ActorActions.removeActor(this)));
 	}

@@ -34,12 +34,6 @@ public class Super extends Mushroom {
 	}
 
 	@Override
-	protected void hitBlock(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	protected void dieByFalling() {
 		if(this.getY() < -3f) {
 			setDead(true);
