@@ -3,6 +3,7 @@ package nl.arjanfrans.mario.model;
 import nl.arjanfrans.mario.actions.MarioActions;
 import nl.arjanfrans.mario.actions.MoveableActions;
 import nl.arjanfrans.mario.audio.Audio;
+import nl.arjanfrans.mario.debug.D;
 import nl.arjanfrans.mario.graphics.MarioAnimation;
 
 import com.badlogic.gdx.Gdx;
@@ -64,6 +65,10 @@ public class Mario extends Creature {
 					Actions.alpha(1f),
 					MarioActions.stopImmumeAction(this)));
 		}
+	}
+	
+	public void captureFlag(Rectangle flagRect) {
+		
 	}
 
 	protected void dieByFalling() {

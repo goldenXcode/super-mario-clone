@@ -3,16 +3,21 @@ package nl.arjanfrans.mario.model;
 import java.util.Iterator;
 
 import nl.arjanfrans.mario.audio.Audio;
+import nl.arjanfrans.mario.debug.D;
 import nl.arjanfrans.mario.graphics.Tiles;
 import nl.arjanfrans.mario.view.WorldRenderer;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile.BlendMode;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
@@ -20,6 +25,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.Pool;
 
 
@@ -42,7 +48,12 @@ public class World {
 	private Stage stage;
 	private WorldRenderer wr;
 	
-	public static Array<Actor> objectsToRemove = new Array();
+	/**
+	 * The flag at the end of the level.
+	 */
+	private Flag flag;
+	
+	public static Array<Actor> objectsToRemove = new Array<Actor>();
 	
 	public World() {
 		reset();
@@ -76,8 +87,12 @@ public class World {
 	
 	private void reset() {
 		map = new TmxMapLoader().load("data/level1.tmx");
-		animateTiles((TiledMapTileLayer) map.getLayers().get("close_background"));
+
+		animateTiles((TiledMapTileLayer) map.getLayers().get("walls_background"));
+		initTileset((TiledMapTileLayer) map.getLayers().get("walls_background"));
 		animateTiles((TiledMapTileLayer) map.getLayers().get("walls"));
+		initTileset((TiledMapTileLayer) map.getLayers().get("walls"));
+		
 		
 		//Read the object named 'mario' from the tmx map. Read the starting position.
 		MapObject mario = map.getLayers().get("objects").getObjects().get("mario");
@@ -87,7 +102,9 @@ public class World {
 		goombas = generateEnemies();
 		mushrooms = new Array<Mushroom>();
 		generateBricks((TiledMapTileLayer) map.getLayers().get("walls"));
+		
 		generateFlag((MapLayer) map.getLayers().get("objects"));
+		
 		stage.addActor(player);
 		String song = (String) map.getLayers().get("background").getObjects().get("background_image")
 				.getProperties().get("audio");
@@ -98,6 +115,9 @@ public class World {
 	}
 	
 	public void update() {
+		//Check if the level has ended
+		endLevel();
+		
 		Rectangle screen = rectPool.obtain();
 		screen.set(wr.getCamera().position.x - wr.getCamera().viewportWidth/2, 
 				wr.getCamera().position.y-wr.getCamera().viewportHeight/2,
@@ -124,13 +144,17 @@ public class World {
 		wr.render();
 	}
 	
+	/**
+	 * Setup the flag at the end of the level
+	 * @param layer Tmx map layer with the object named 'flag';
+	 */
 	private void generateFlag(MapLayer layer) {
 		MapObject obj = layer.getObjects().get("flag");
 		float x = (Integer) obj.getProperties().get("x") * (1/16f);
 		float y = (Integer) obj.getProperties().get("y") * (1/16f);
 		float width = Float.valueOf((String) obj.getProperties().get("width"));
 		float height = Float.valueOf((String) obj.getProperties().get("height"));
-		Flag flag = new Flag(x, y, width, height);
+		flag = new Flag(x, y, width, height);
 		stage.addActor(flag);
 	}
 	
@@ -193,6 +217,9 @@ public class World {
 		}
 	}
 	
+	/**
+	 * @return All StaticActor classes. Bricks for example.
+	 */
 	public Array<StaticActor> getStaticActors() {
 		Array<StaticActor> staticActors = new Array<StaticActor>();
 		for(Actor a : stage.getActors()) {
@@ -226,6 +253,13 @@ public class World {
 					}
 				}
 			}
+		}
+	}
+	
+	private void endLevel() {
+		if(player.rect.overlaps(flag.rect())) {
+			D.o("Flag captured");
+			player.captureFlag(flag.rect());
 		}
 	}
 	
@@ -267,6 +301,37 @@ public class World {
 		return mushrooms;
 	}
 	
+	/**
+	 * Tiles that have a 'texture' property will be using an optimized tileset. This is to avoid screen tearing.
+	 * @param layer
+	 */
+	private void initTileset(TiledMapTileLayer layer) {
+		ArrayMap<String, TextureRegion> textureArr = new ArrayMap<String, TextureRegion>();
+		for(int x = 0; x < layer.getWidth(); x++) {
+			for(int y = 0; y < layer.getHeight(); y++) {
+				Cell cell = layer.getCell(x, y);
+				if(cell != null) {
+					TiledMapTile oldTile = cell.getTile();
+					
+					if(oldTile.getProperties().containsKey("texture")) {
+						D.o("Initializing textures");
+						String texture = (String) oldTile.getProperties().get("texture");
+						if(textureArr.containsKey(texture)) {
+							oldTile.getTextureRegion().setRegion(textureArr.get(texture));
+						}
+						else {
+							TextureRegion t = Tiles.getTile(texture);
+							textureArr.put(texture, t);
+							oldTile.getTextureRegion().setRegion(t);
+						}						
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
 	public Array<Rectangle> getTiles(int startX, int startY, int endX, int endY)
 	{
 		Array<Rectangle> tiles = new Array<Rectangle>();
@@ -288,6 +353,8 @@ public class World {
 		}
 		return tiles;
 	}
+	
+	
 	
 	public void dispose() {
 		map.dispose();
