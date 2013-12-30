@@ -4,6 +4,7 @@ import nl.arjanfrans.mario.graphics.Tiles;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
@@ -32,6 +33,12 @@ public class Flag extends Actor {
 		batch.draw(animation.getKeyFrame(stateTime), this.getX() + this.getOriginX(), this.getHeight() , 
 				animation.getKeyFrame(stateTime).getRegionWidth() * World.scale, animation.getKeyFrame(stateTime).getRegionHeight() * World.scale);
 	}
+	
+	public Rectangle rect() {
+		return new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+	}
+	
+	
 
 
 }

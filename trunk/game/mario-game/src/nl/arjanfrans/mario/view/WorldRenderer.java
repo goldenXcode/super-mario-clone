@@ -31,7 +31,7 @@ public class WorldRenderer {
 	private World world;
 	private Mario player;
 
-	private Color background_color;
+	//private Color background_color;
 	private Texture background_image;
 	private Stage stage;
 	private ParallaxBackground parallax_bg;
@@ -43,16 +43,15 @@ public class WorldRenderer {
 
 	public WorldRenderer(World world) {
 		this.world = world;
-		this.background_color = getBackgroundColor();
+		//this.background_color = getBackgroundColor();
 		background_image = loadBackground();
-		//		
+	
 		player = world.getPlayer();
 
 		renderer = new OrthogonalTiledMapRenderer(world.getMap(), 1 / 16f);
 
 		stage = world.getStage();
 		stage.setViewport(16, 12, true);
-
 
 		// create an orthographic camera, shows us 30x20 units of the world
 		camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -65,13 +64,10 @@ public class WorldRenderer {
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 
-
-		ParallaxLayer l1=new ParallaxLayer(world, "far_background", 0.8f,0);
-		ParallaxLayer l2=new ParallaxLayer(world, "middle_background", 0.5f,0);
-		ParallaxLayer l3=new ParallaxLayer(world, "front_background", 0.3f,0);
-		//		ParallaxLayer l2=new ParallaxLayer(layer2,0.5f,0);
-		//		ParallaxLayer l3=new ParallaxLayer(layer3,1,0);
-		ParallaxLayer[] layers={l1, l2, l3};
+		ParallaxLayer l1 = new ParallaxLayer(world, "far_background", 0.8f,0);
+		ParallaxLayer l2 = new ParallaxLayer(world, "middle_background", 0.5f,0);
+		ParallaxLayer l3 = new ParallaxLayer(world, "front_background", 0.3f,0);
+		ParallaxLayer[] layers ={l1, l2, l3};
 		parallax_bg=new ParallaxBackground(world, layers, camera, renderer.getSpriteBatch());
 
 	}
@@ -101,23 +97,23 @@ public class WorldRenderer {
 		viewport = new Rectangle(crop.x, crop.y, w, h);
 	}
 
-	private Color getBackgroundColor() {
-		String bg = (String) world.getMap().getProperties().get("backgroundcolor");
-		bg = bg.substring(1);
-		if(bg.startsWith("0x"))
-			bg = bg.substring(2);
+//	private Color getBackgroundColor() {
+//		String bg = (String) world.getMap().getProperties().get("backgroundcolor");
+//		bg = bg.substring(1);
+//		if(bg.startsWith("0x"))
+//			bg = bg.substring(2);
+//
+//		return colorFromHex(Long.parseLong(bg, 16));       
+//	}
 
-		return colorFromHex(Long.parseLong(bg, 16));       
-	}
-
-	private Color colorFromHex(long hex) {
-		float a = (hex & 0xFF000000L) >> 24;
-		float r = (hex & 0xFF0000L) >> 16;
-		float g = (hex & 0xFF00L) >> 8;
-		float b = (hex & 0xFFL);
-
-		return new Color(r/255f, g/255f, b/255f, a/255f);
-	}
+//	private Color colorFromHex(long hex) {
+//		float a = (hex & 0xFF000000L) >> 24;
+//		float r = (hex & 0xFF0000L) >> 16;
+//		float g = (hex & 0xFF00L) >> 8;
+//		float b = (hex & 0xFFL);
+//
+//		return new Color(r/255f, g/255f, b/255f, a/255f);
+//	}
 
 	private Texture loadBackground() {
 		String name = (String) world.getMap().getLayers().get("background").getObjects().get("background_image")
@@ -148,13 +144,12 @@ public class WorldRenderer {
 		if(!world.getMap().equals(renderer.getMap())) renderer.setMap(world.getMap());
 
 		// clear the screen
-		Gdx.gl.glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
-		//Gdx.gl.glClearColor(0, 0, 0, 0);
+		//Gdx.gl.glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);		
 
-		// let the camera follow the koala, x-axis only
+		// let the camera follow the player, x-axis only
 		camera.position.x = player.getX();
-
 		camera.update();
 
 		// set viewport

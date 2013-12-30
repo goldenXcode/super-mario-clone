@@ -2,6 +2,7 @@ package nl.arjanfrans.mario.view;
 
 import java.util.Iterator;
 
+import nl.arjanfrans.mario.debug.D;
 import nl.arjanfrans.mario.model.World;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -66,8 +67,9 @@ public class ParallaxBackground {
 		Iterator<MapObject> it = layer.getLayerObjects().iterator();
 		while(it.hasNext()) {
 			MapObject obj = it.next();
-			float x = (Integer) obj.getProperties().get("x") * 1/16f;
-			float y = (Integer) obj.getProperties().get("y") * 1/16f;
+			float x = (float) ((Integer) obj.getProperties().get("x") * 1/16f);
+			float y = (float) ((Integer) obj.getProperties().get("y") * 1/16f);
+			D.o(String.valueOf((float) ((Integer) obj.getProperties().get("y") * 1/16f)));
 			
 			String file = "data/backgrounds/" + (String) obj.getProperties().get("src");
 			Texture texture = layer.getLayerTextures().get(file);

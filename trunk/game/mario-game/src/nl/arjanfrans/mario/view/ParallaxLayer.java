@@ -60,6 +60,7 @@ public class ParallaxLayer {
 	 * Load the objects from the tmx file, convert them into textures and put them on the layer.
 	 */
 	private void loadObjects() {
+		//TODO Use a spritesheet for the background objects
 		Map map = world.getMap();
 		Iterator<MapObject> it = map.getLayers().get(layer_name).getObjects().iterator();
 		while(it.hasNext()) {

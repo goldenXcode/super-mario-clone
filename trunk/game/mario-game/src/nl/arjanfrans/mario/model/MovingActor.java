@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Pool;
 
 public abstract class MovingActor extends Actor {
 	public static enum State {
-		Standing, Walking, Jumping, Dying, Dead
+		Standing, Walking, Jumping, Dying, Dead, FlagSlide
 	}
 	public static enum Direction {
 		LEFT, RIGHT;

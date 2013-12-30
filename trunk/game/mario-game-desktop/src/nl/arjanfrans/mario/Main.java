@@ -11,6 +11,7 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = 512;
 		cfg.height = 448;
+		cfg.vSyncEnabled = true;
 		new LwjglApplication(new MarioGame(), cfg);
 	}
 }
