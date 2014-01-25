@@ -17,7 +17,7 @@ public class Flag extends Actor {
 		animation = Tiles.getAnimation(0.15f, "evil_flag");
 		animation.setPlayMode(Animation.LOOP_PINGPONG);
 		this.setOrigin(width / 2, height);
-		this.setBounds(x, y, width, height);
+		this.setBounds(x + (8 * World.scale), y, 2 * World.scale, height);
 		this.setTouchable(Touchable.disabled);
 	}
 	
@@ -30,7 +30,7 @@ public class Flag extends Actor {
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(animation.getKeyFrame(stateTime), this.getX() + this.getOriginX(), this.getHeight() , 
+		batch.draw(animation.getKeyFrame(stateTime), this.getX() - (1 * World.scale), this.getHeight() , 
 				animation.getKeyFrame(stateTime).getRegionWidth() * World.scale, animation.getKeyFrame(stateTime).getRegionHeight() * World.scale);
 	}
 	

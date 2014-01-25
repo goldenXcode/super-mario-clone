@@ -17,6 +17,8 @@ public class MarioAnimation extends CharacterAnimation {
 	private static Animation standing_big;
 	private static Animation jumping_big;
 	private static Animation crouch_big;
+	private static Animation flagslide_small;
+	private static Animation flagslide_big;
 	
 
 	public MarioAnimation() {
@@ -45,6 +47,12 @@ public class MarioAnimation extends CharacterAnimation {
 		region = atlas.findRegion("mario_big_crouch");
 		crouch_big = new Animation(0, region);
 		
+		region = atlas.findRegion("mario_big_flagslide");
+		flagslide_big = new Animation(0, region);
+		
+		region = atlas.findRegion("mario_mini_flagslide");
+		flagslide_small = new Animation(0, region);
+		
 	}
 
 
@@ -70,6 +78,13 @@ public class MarioAnimation extends CharacterAnimation {
 				}
 				else if(level == 2) {
 					return jumping_big;
+				}
+			case FlagSlide:
+				if(level == 1) {
+					return flagslide_small;
+				}
+				else if(level == 2) {
+					return flagslide_big;
 				}
 			case Dying:
 				return dying;
