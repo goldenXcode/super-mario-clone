@@ -59,6 +59,8 @@ public class World {
 		reset();
 	}
 	
+	private boolean level_ended = false;
+	
 	
 	private Array<Goomba> generateEnemies() {
 		Array<Goomba> goombas = new Array<Goomba>();
@@ -116,7 +118,7 @@ public class World {
 	
 	public void update() {
 		//Check if the level has ended
-		endLevel();
+		if(!level_ended) endLevel();
 		
 		Rectangle screen = rectPool.obtain();
 		screen.set(wr.getCamera().position.x - wr.getCamera().viewportWidth/2, 
@@ -258,8 +260,8 @@ public class World {
 	
 	private void endLevel() {
 		if(player.rect.overlaps(flag.rect())) {
-			D.o("Flag captured");
 			player.captureFlag(flag.rect());
+			level_ended = true;
 		}
 	}
 	
