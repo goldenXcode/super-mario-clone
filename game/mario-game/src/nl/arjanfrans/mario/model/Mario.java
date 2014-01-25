@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 
@@ -67,8 +68,12 @@ public class Mario extends Creature {
 		}
 	}
 	
+
 	public void captureFlag(Rectangle flagRect) {
 		state = State.FlagSlide;
+		this.addAction(Actions.sequence(
+				Actions.delay(0.2f),
+				Actions.moveTo(this.getX(), flagRect.y, 0.5f, Interpolation.linear)));
 	}
 
 	protected void dieByFalling() {
@@ -85,23 +90,27 @@ public class Mario extends Creature {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if(state != State.Dying && state != State.FlagSlide) {
-			if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.75f, 1)) && grounded) {
-				jump();
+		if(state != State.Dying) {
+			if(state != State.FlagSlide) {
+				if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.75f, 1)) && grounded) {
+					jump();
+				}
+				if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
+					move(Direction.LEFT);
+				}
+				if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
+					move(Direction.RIGHT);
+				}
+					
+				width = gfx.getFrameWidth(level, width);
+				height = gfx.getFrameHeight(level, height);
+				rect.set(this.getX(), this.getY(), width, height);
+				
+				collisionWithEnemy();
+				collisionWithMushroom();
+				applyPhysics(rect);
 			}
-			if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
-				move(Direction.LEFT);
-			}
-			if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
-				move(Direction.RIGHT);
-			}
-
-			width = gfx.getFrameWidth(level, width);
-			height = gfx.getFrameHeight(level, height);
-			rect.set(this.getX(), this.getY(), width, height);
-			applyPhysics(rect);
-			collisionWithEnemy();
-			collisionWithMushroom();
+			
 		}
 	}
 
