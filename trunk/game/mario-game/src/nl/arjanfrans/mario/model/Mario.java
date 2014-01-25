@@ -68,7 +68,7 @@ public class Mario extends Creature {
 	}
 	
 	public void captureFlag(Rectangle flagRect) {
-		
+		state = State.FlagSlide;
 	}
 
 	protected void dieByFalling() {
@@ -85,7 +85,7 @@ public class Mario extends Creature {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if(state != State.Dying) {
+		if(state != State.Dying && state != State.FlagSlide) {
 			if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.75f, 1)) && grounded) {
 				jump();
 			}
